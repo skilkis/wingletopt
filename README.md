@@ -1,6 +1,7 @@
 # Winglet Optimization Using AVL
 
 [![Python 3.8][python_badge]](https://www.python.org/downloads/release/python-382/)
+![Windows 10][os_badge]
 [![License: MIT][mit_badge]](https://opensource.org/licenses/MIT)
 [![Code Style: Black][black_badge]](https://github.com/ambv/black)
 [![CICD: GitHub Actions][build_status]](https://github.com/skilkis/wingletopt/actions)
@@ -32,6 +33,7 @@ additional operating systems, please submit a pull request! -->
 
 <!-- Un-wrapped Links below -->
 [python_badge]: https://img.shields.io/badge/python->3.8-blue.svg
+[os_badge]: https://img.shields.io/badge/platform-windows-blue.svg
 [mit_badge]: https://img.shields.io/badge/license-MIT-brightgreen.svg
 [black_badge]: https://img.shields.io/badge/code%20style-black-000000.svg
 [build_status]: https://github.com/skilkis/xfoil_wrapper/workflows/build/badge.svg
