@@ -186,7 +186,3 @@ class TrapezoidalLiftingSurface(avl.Surface):
             Remember that this is the surface area of the half-wing.
         """
         return self.half_span * self.root_chord * (1 + self.taper_ratio) / 2
-
-
-class CompoundWing(avl.Geometry):
-    pass
