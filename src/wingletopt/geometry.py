@@ -124,7 +124,7 @@ class TrapezoidalLiftingSurface(avl.Surface):
         )
 
     @cached_property
-    def tip_chord(self) -> avl.Point:
+    def tip_chord(self) -> float:
         """Tip chord length in SI meter."""
         return self.root_chord * self.taper_ratio
 
