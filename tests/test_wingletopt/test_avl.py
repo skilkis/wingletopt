@@ -5,6 +5,22 @@ import pytest
 from wingletopt import avl
 
 CHORD = 1.8
+BUDZIAK_DATA = (
+    # Rectangular wing data from pg. 41 of Kinga Budziak, 2015
+    # A, alpha, e, CD, CL
+    (5, 6.91, 0.9892, 0.01456, 0.47565),
+    (7, 6.17, 0.9779, 0.01049, 0.47503),
+    (9, 5.77, 0.9656, 0.00825, 0.47473),
+    (10, 5.63, 0.9594, 0.00747, 0.47463),
+    (11, 5.52, 0.9531, 0.00684, 0.47456),
+    (13, 5.34, 0.9413, 0.00586, 0.47445),
+    (15, 5.21, 0.9299, 0.00514, 0.47437),
+)
+"""Rectangular wing data from pg. 41 of Kinga Budziak, 2015
+
+Columns represent aspect ratio, angle of attack, oswald span efficiency
+factor, drag coefficient, and lift coefficient respectively.
+"""
 
 
 @pytest.fixture
@@ -69,21 +85,12 @@ def test_avl_monkeypatch(aircraft: avl.Aircraft, tmpdir) -> None:
 
 # Testing using values from pg. 41 of Kinga Budziak, 2015
 @pytest.mark.parametrize(
-    "aspect, alpha, oswald, expected_drag, expected_lift",
-    (
-        (5, 6.91, 0.9892, 0.01456, 0.47565),
-        (7, 6.17, 0.9779, 0.01049, 0.47503),
-        (9, 5.77, 0.9656, 0.00825, 0.47473),
-        (10, 5.63, 0.9594, 0.00747, 0.47463),
-        (11, 5.52, 0.9531, 0.00684, 0.47456),
-        (13, 5.34, 0.9413, 0.00586, 0.47445),
-        (15, 5.21, 0.9299, 0.00514, 0.47437),
-    ),
+    "aspect, alpha, oswald, expected_drag, expected_lift", BUDZIAK_DATA
 )
 def test_avl_lift(
     aircraft: avl.Aircraft, cases, oswald, expected_drag, expected_lift
 ):
-    """Tests AVL output for correct lift coefficient and gradient."""
+    """Tests AVL output for correct span efficiency, lift and drag."""
     avl_session = avl.Session(aircraft, cases=cases)
     result = avl_session.run_all_cases()[cases[0].name]
 
