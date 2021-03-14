@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import List
 
 import pytest
@@ -77,13 +78,36 @@ def cases(alpha) -> List[avl.Case]:
 
 
 @pytest.mark.parametrize("aspect", [10])
-def test_avl_monkeypatch(aircraft: avl.Aircraft, tmpdir) -> None:
+@pytest.fixture
+def session(aircraft: avl.Aircraft) -> avl.Session:
+    """Returns an AVL session at A=10 of the."""
+    return avl.Session(aircraft, cases=[avl.Case("test_case", alpha=0)])
+
+
+@pytest.mark.parametrize("aspect", [10])
+def test_avl_monkeypatch(session: avl.Session, tmpdir) -> None:
     """Tests if a :py:class:`avl.Session` can be run without config."""
-    avl_session = avl.Session(aircraft, cases=[avl.Case("test_case", alpha=0)])
-    avl_session.run_all_cases(directory=tmpdir)  # This should succeed
+    session.run_all_cases(directory=tmpdir)  # This should succeed
 
 
-# Testing using values from pg. 41 of Kinga Budziak, 2015
+@pytest.mark.parametrize("aspect", [10])
+def test_geometry_export(session: avl.Session, in_tmpdir) -> None:
+    """Tests if a :py:class:`avl.Session` can be run without config."""
+    session.save_geometry_plot()
+
+    out_path = Path(in_tmpdir)
+    assert out_path / f"{session.name}-geometry.ps" in out_path.iterdir()
+
+
+@pytest.mark.parametrize("aspect", [10])
+def test_treffz_export(session: avl.Session, in_tmpdir) -> None:
+    """Tests if a :py:class:`avl.Session` can be run without config."""
+    session.save_trefftz_plots()
+
+    out_path = Path(in_tmpdir)
+    assert out_path / f"{session.name}-trefftz-%d.ps" in out_path.iterdir()
+
+
 @pytest.mark.parametrize(
     "aspect, alpha, oswald, expected_drag, expected_lift", BUDZIAK_DATA
 )
