@@ -3,8 +3,8 @@ import math
 import numpy as np
 import pytest
 
-from wingletopt import avl
-from wingletopt.geometry import TrapezoidalLiftingSurface, normalize, rotate_3d
+from wingletopt import TrapezoidalLiftingSurface, avl
+from wingletopt.geometry import normalize, rotate_3d
 
 
 @pytest.mark.parametrize(
